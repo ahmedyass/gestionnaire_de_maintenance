@@ -1,0 +1,36 @@
+{% extends "formulaire.html" %}
+{% block title %}
+    Authentification
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="formulaire">
+            <h1 class="titre">Authentification</h1>
+            <form action="/login" method="post">
+                <div class="groupe">
+                    <input type="email" name="email" id="email">
+                    <label for="email">Email</label>
+                </div>
+                <div class="groupe">
+                    <input type="password" name="password" id="password">
+                    <label for="password">Mot de passe</label>
+                </div>
+                <button type="submit">Se connecter</button>
+                <div class="liens">
+                    <a class="lien" href="{{ url_for('mdp_requet') }}">Mot de passe oublié</a>
+                </div>
+            </form>
+            {% with messages = get_flashed_messages(category_filter=["danger"]) %}
+            {% if messages %}
+            <div class="alert danger-alert" id="alert">
+                <p>{{ messages[0] }}</p>
+                <a class="close">&times;</a>
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script src="{{ url_for('static', filename='scripts/alerts.js') }}"></script>
+{% endblock %}

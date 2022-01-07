@@ -1,0 +1,18 @@
+{% extends "formulaire.html" %}
+{% block title %}
+Ajouter Localisation   
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="formulaire">
+            <h1 class="titre">Ajouter Localisation</h1>
+            <form action="/localisations/add" method="POST">
+                <div class="groupe">
+                    <input type="text" name="nom" id="nom">
+                    <label for="nom">Nom</label>
+                </div>
+                <button type="submit">Ajouter</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

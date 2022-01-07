@@ -1,0 +1,107 @@
+{% extends "table.html" %}
+{% block title %}
+    Liste des Responsables
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div>
+            <div class="entete">
+                <h1 class="titre">Liste des responsables</h1>
+                <div>
+                    <a class="link" id="ajouter">Ajouter</a>
+                    <a class="link" href="/">Acceuil</a>
+                    <a class="link" href="/logout">Se déconnecter</a>
+                </div>
+            </div>
+            <table cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
+                        <th>Fonction</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for responsable in responsables.items %}
+                    {% if responsable.fonction != 'admin' %}
+                    <tr>
+                        <td>{{ responsable.id }}</td>
+                        <td>{{ responsable.nom }}</td>
+                        <td>{{ responsable.prenom }}</td>
+                        <td>{{ responsable.email }}</td>
+                        <td>{{ responsable.fonction }}</td>
+                        <td><a href="/responsables/{{ responsable.id }}/supp">Supprimer</a></td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="pages">
+                {% for page_num in responsables.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                    {% if page_num %}
+                        {% if responsables.page == page_num %}
+                        <a href="{{ url_for('lister_responsables', page=page_num) }}"
+                           class="disactive">
+                            {{ page_num }}
+                        </a>
+                        {% else %}
+                        <a href="{{ url_for('lister_responsables', page=page_num) }}"
+                           class="link">
+                            {{ page_num }}
+                        </a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="fermer">&times;</span>
+          <h2 class="titre">Ajouter responsable</h2>
+          <form action="{{ url_for('ajouter_responsable') }}" method="POST">
+            <div class="groupe">
+                <input type="text" name="nom" id="nom" class="modal-input" required>
+                <label for="nom" class="modal-label">Nom</label>
+            </div>
+            <div class="groupe">
+                <input type="text" name="prenom" id="prenom" class="modal-input" required>
+                <label for="prenom" class="modal-label">Prénom</label>
+            </div>
+            <div class="groupe">
+                <input type="email" name="email" id="email" class="modal-input" required>
+                <label for="email" class="modal-label">Email</label>
+            </div>
+            <div class="groupe">
+                <input type="text" name="fonction" id="fonction" class="modal-input" required>
+                <label for="fonction" class="modal-label">Fonction</label>
+            </div>
+            <button type="submit" class="modal-button">Ajouter Responsable</button>
+          </form>
+        </div>
+    </div>
+    <script>
+        var modal = document.getElementById("modal");
+        
+        var btn = document.getElementById("ajouter");
+        
+        var span = document.getElementsByClassName("fermer")[0];
+        
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+        
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+        
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    </script>
+{% endblock %}

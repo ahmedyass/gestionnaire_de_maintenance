@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+    background: url('../img/mode-maintenance-wordpress-fr.jpg') no-repeat center;
+    background-size: cover;
+    height: 100vh;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container::before {
+    content: '';
+    background-color: #202020f5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 105vh;
+    z-index: 0;
+}
+
+.formulaire {
+    text-align: center;
+    position: relative;
+    width: 25em;
+}
+
+.titre {
+    color: white;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    margin-bottom: 2em;
+}
+
+.user{
+    color: #fcb900;
+}
+
+.groupe {
+    margin: 1.5em 0;
+    position: relative;
+    text-align: left;
+}
+
+.container * {
+    outline: none;
+}
+
+input, select, textarea {
+    color: white;
+    display: block;
+    width: 100%;
+    height: 3em;
+    margin: 0;
+    padding: 0.5em 0;
+    background: transparent;
+    border: 0;
+    border-bottom: 3px solid #fcb900;
+    transition: 0.3s;
+}
+
+option {
+    color: #202020;
+    font-family: 'Montserrat', sans-serif;
+}
+
+label {
+    color: #fcb900;
+    position: absolute;
+    font-size: 0.9em;
+    font-weight: 500;
+    pointer-events: none;
+    transition: 0.3s;
+    top: -1em;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-bottom: 3px solid white;
+}
+
+input:focus ~ label, select:focus ~ label, textarea:focus ~ label {
+    font-size: 0.7em;
+}
+
+button {
+    border: 3px solid #fcb900;
+    padding: 2em;
+    background: transparent;
+    color: #fcb900;
+    cursor: pointer;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #fcb900;
+    color: #202020;   
+}
+
+.acc {
+    width: 100%;
+    margin-bottom: 2em;
+}
+.liens {
+    margin-top: 1em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.lien {
+    font-size: 1em;
+    font-weight: 300;
+    color: white;
+    text-decoration: none;
+}
+
+.lien:hover {
+    text-decoration: line-through;
+}

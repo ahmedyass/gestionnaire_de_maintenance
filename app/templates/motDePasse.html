@@ -1,0 +1,29 @@
+{% extends "formulaire.html" %}
+{% block title %}
+    Authentification
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="formulaire">
+            <h1 class="titre">Réinitialisation du mot de passe</h1>
+            <form action="" method="post">
+                <div class="groupe">
+                    <input type="email" name="email" id="email">
+                    <label for="email">Email</label>
+                </div>
+                <button type="submit">Valider</button>
+            </form>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert danger-alert" id="alert">
+                <p>{{ messages[0] }}</p>
+                <a class="close">&times;</a>
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script src="{{ url_for('static', filename='scripts/alerts.js') }}"></script>
+{% endblock %}

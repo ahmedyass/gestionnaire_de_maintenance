@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>Imprimer</title>
+        <style>
+            table{
+                height: 42mm;
+                width: 105mm;
+            }
+            table, tr {
+                border: 1px solid #fcb452;
+            }
+            .img{
+                height: 42mm;
+                width: 42mm;
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td class="img" rowspan="2"><img src="{{ qr }}" height="158" width="158"></td>
+                <td><h1>Flashez Moi !</h1></td>
+            </tr>
+            <tr>
+                <td>Pour signaler un problème <br><br>{{ idres }}<br><br><a href="{{ url }}">{{ url }}</a></td>
+            </tr>
+        </table>
+    </body>
+</html>

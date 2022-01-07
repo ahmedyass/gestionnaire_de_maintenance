@@ -1,0 +1,67 @@
+{% extends "table.html" %}
+{% block title %}
+    Liste des anomalies
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div>
+            <div class="entete">
+                <h1 class="titre">Liste des anomalies</h1>
+                <div>
+                    <a class="link" href="/signaler/{{ ressource.id }}/add">Ajouter</a>
+                    {% if current_user.is_authenticated %}
+                    <a class="link" href="/">Acceuil</a>
+                    <a class="link" href="/logout">Se déconnecter</a>
+                    {% else %}
+                    <a class="link" href="/login">Se connecter</a>
+                    {% endif %}
+                </div>
+            </div>
+            <table cellspacing="0">
+                <thead>
+                    <tr>
+                        {% if current_user.is_authenticated %}
+                        <th>ID</th>
+                        {% endif %}
+                        <th>Ressource</th>
+                        <th>Description</th>
+                        {% if current_user.is_authenticated and current_user.id == ressource.responsable_id %}
+                        <th>Arrêter</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for anomalie in anomalies.items %}
+                    <tr>
+                        {% if current_user.is_authenticated %}
+                        <td>{{ anomalie.id }}</td>
+                        {% endif %}
+                        <td>{{ ressource.nom }}</td>
+                        <td>{{ anomalie.description }}</td>
+                        {% if current_user.is_authenticated and current_user.id == ressource.responsable_id  %}
+                        <td><a href="/signaler/{{ ressource.id }}/arr/{{ anomalie.id }}">Arrêter</a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="pages">
+                {% for page_num in anomalies.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                    {% if page_num %}
+                        {% if anomalies.page == page_num %}
+                        <a href="{{ url_for('lister_anomalies', id=ressource.id, page=page_num) }}"
+                           class="disactive">
+                            {{ page_num }}
+                        </a>
+                        {% else %}
+                        <a href="{{ url_for('lister_anomalies', id=ressource.id, page=page_num) }}"
+                           class="link">
+                            {{ page_num }}
+                        </a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

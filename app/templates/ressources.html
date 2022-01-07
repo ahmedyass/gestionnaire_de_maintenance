@@ -1,0 +1,118 @@
+{% extends "table.html" %}
+{% block title %}
+    Liste des ressources
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div>
+            <div class="entete">
+                <h1 class="titre">Liste des ressources</h1>
+                <div class="head">
+                    <a class="link" id="ajouter">Ajouter</a>
+                    <a class="link" href="/">Acceuil</a>
+                    <a class="link" href="/logout">Se déconnecter</a>
+                </div>
+            </div>
+            <table cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Localisation</th>
+                        <th>Description</th>
+                        <th>Liste Anomalies</th>
+                        <th>Actions</th>
+                        <th>Etiquette</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ressource in ressources.items %}
+                    <tr>
+                        <td>{{ ressource.id }}</td>
+                        <td>{{ ressource.nom }}</td>
+                        <td>{{ localisations[ressource.localisation_id] }}</td>
+                        <td>{{ ressource.description }}</td>
+                        <td><a href="/signaler/{{ ressource.id }}">Liste</a></td>
+                        <td><a href="/signaler/{{ ressource.id }}/supp">Suprimer</a></td>
+                        <td><a href=""
+                            onclick ="window.open(
+                                '{{ url_for('imprimer_qr', id=ressource.id) }}', 
+                                '_blank', 
+                                'width=450,height=200')">
+                                Imprimer
+                            </a>
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="pages">
+                {% for page_num in ressources.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                    {% if page_num %}
+                        {% if ressources.page == page_num %}
+                        <a href="{{ url_for('lister_ressources', page=page_num) }}"
+                           class="disactive">
+                            {{ page_num }}
+                        </a>
+                        {% else %}
+                        <a href="{{ url_for('lister_ressources', page=page_num) }}"
+                           class="link">
+                            {{ page_num }}
+                        </a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="fermer">&times;</span>
+          <h2 class="titre">Ajouter ressource</h2>
+          <form action="/ressources/add" method="POST">
+            <div class="groupe">
+                <input type="text" name="nom" id="nom" class="modal-input" required>
+                <label for="nom" class="modal-label">Nom</label>
+            </div>
+            <select name="localisation" id="localisation" class="modal-input" required>
+                {% for localisation in localisations %}
+                <option value="{{ localisation }}">
+                    {{ localisations[localisation] }}
+                </option>
+                {% endfor %}
+            </select>
+            <label for="localisation" class="modal-label">Localisation</label>
+            <div class="groupe">
+                <textarea name="description" id="description" class="modal-input" required></textarea>
+                <label for="description" class="modal-label">Description</label>
+            </div>
+            <button type="submit" class="modal-button">Ajouter</button>
+          </form>
+          <div  class="pages">
+            <a class="link" href="/localisations/add">Ajouter une autre localisation</a>
+          </div>
+        </div>
+    </div>
+    <script>
+        var modal = document.getElementById("modal");
+        
+        var btn = document.getElementById("ajouter");
+        
+        var span = document.getElementsByClassName("fermer")[0];
+        
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+        
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+        
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    </script>
+{% endblock %}

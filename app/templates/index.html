@@ -1,0 +1,23 @@
+{% extends "formulaire.html" %}
+{% block title %}
+    Acceuil
+{% endblock %}
+{% block body %}
+<div class="container">
+    {% if current_user.is_authenticated %}
+    <div class="formulaire">
+        <h1 class="titre">Bienvenue <span class="user">{{ current_user.nom }}</span></h1>
+        {% if current_user.id == 1 %}
+        <a href="/responsables"><button class="acc">Responsables</button></a>
+        {% endif %}
+        <a href="/ressources"><button class="acc">Ressources</button></a>
+        <a href="/logout"><button class="acc">Se déconnecter</button></a>
+    </div>
+    {% else %}
+    <div class="formulaire">
+        <h1 class="titre">Bienvenue</h1>
+        <a href="/login"><button class="acc">Se connecter</button></a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
